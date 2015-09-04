@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,12 @@ import org.springframework.stereotype.Service;
  * Composite Message Processor
  */
 @Service
-public class SimpleMessagePipline implements IMessageProcessor, IMessageQueuer,BeanPostProcessor  {
+public class SimpleMessagePipline implements IMessageProcessor, IMessageQueuer, InitializingBean  {
 	
 	@Autowired
 	ISequenceRegistry sequenceRegistry;
 	
 	public SimpleMessagePipline(){
-
-
 	}
 	
 	List<IMessageProcessor> messageProcessors = new ArrayList<IMessageProcessor>();	
@@ -50,13 +49,12 @@ public class SimpleMessagePipline implements IMessageProcessor, IMessageQueuer,B
 		return queue.poll();
 	}
 	
-	//dont like this but for now
-   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-	      System.out.println("BeforeInitialization : " + beanName);
+   public void afterPropertiesSet() {
+	      System.out.println("AfterInitialization : ");
 			messageProcessors.add(new ResquencingMessageProcessor(sequenceRegistry));
 			messageProcessors.add(new SmartMessageProcessor());
 			messageProcessors.add(new PostMessageProcessor(sequenceRegistry));	
-			ExecutorService executor = Executors.newSingleThreadExecutor();
+			ExecutorService executor = Executors.newFixedThreadPool(2)	;
 			executor.execute(new Runnable() {
 			    public void run() {
 			    	while(true){
@@ -70,20 +68,14 @@ public class SimpleMessagePipline implements IMessageProcessor, IMessageQueuer,B
 			    			}
 			    		}
 			    		try{
-			    			Thread.sleep(5000);
+			    			Thread.sleep(1000);
 			    		} catch(InterruptedException e){}
 			    	}
 			    }
 			});				
-	      return bean;  // you can return any other object as well
 	   }
    
-   public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-	      System.out.println("BeforeInitialization : " + beanName);
-	      return bean;  // you can return any other object as well
-	   }
 
-	
 }
 
 

@@ -6,7 +6,7 @@ public class SmartMessageProcessor implements IMessageProcessor {
 
 	@Override
 	public void processMessage(SmartCommand message) {
-		System.out.println("SmartMessageProcessor processed message");
+		System.out.println("SmartMessageProcessor processed message " + message.getSequenceId());
 
 	}
 

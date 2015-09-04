@@ -14,9 +14,9 @@ public class PostMessageProcessor implements IMessageProcessor{
 	
 	@Override
 	public void processMessage(SmartCommand message) {
-		System.out.println("PostMessageProcessor to process message");
+		System.out.println("PostMessageProcessor to process message " + message.getSequenceId());
 		sequenceRegistry.setNextSequence(message.getSequenceScope(), message.getSequenceId());
-		System.out.println("PostMessageProcessor processed message");
+		System.out.println("PostMessageProcessor processed message " + message.getSequenceId());
 		
 	}
 
