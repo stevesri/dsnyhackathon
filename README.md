@@ -34,7 +34,7 @@ Steps -
 ```
 1 . git clone https://github.com/stevesri/dsnyhackathon.git
 2.  git clone https://github.com/sandeshdanwale/feprocessor.git
-3.  git clone https://github.com/sandeshdanwale/feprocessor.git
+3.  git clone https://github.com/sandeshdanwale/nodeproxy.git
 4.  Go to /dsnyhackathon/source/smart-app
 5.  Run the command `gradle bootRun` - this will start an app server at localhost:8080
 6.  Check web server started properly by accessing http://localhost:8080/smartapp
