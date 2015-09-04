@@ -27,6 +27,8 @@ We took a cursory look at the various open-source integration frameworks in dept
 these issues. Given the time-frame, we have chosen to come up with a simple home-grown framework to handle this issue.
 By doing this excercise, we will be able to understand the challenges in a greater depth in an isolated piece of code/environment.
 
+Please look at the architecture folder for the overall design
+
 # How to
 Steps -
 ```
@@ -56,3 +58,12 @@ App/                    --> all of the source files for the application
    nodeproxy.js
 
 ```
+
+Testing
+--------
+Currently the testing capabilities are limited to reviewing the log files to determine the order in which the commands were executed. However automated end-to-end tests could be built if the server sents back a message confirmation after the message is processed. Due to lack of time, we did not build that. Unit Tests could be built if stub dependencies could be injected.
+
+Current Drawbacks
+-----------------
+This solution does not use a centeralized store ( DB) for Sequence Registry. The current implementation will work if it is tested on a single JVM. Spring Integration will be a perfectly suited candidate for receiving messages on different end-points ( REST/SOAP/AMQP - Gatways) and processing messages. We could write custom Message Processors.
+
