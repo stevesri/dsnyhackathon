@@ -44,4 +44,15 @@ Steps -
 12. Please see testing section below for further instructions
 
 ```
+## Directory Layout
 
+```
+App/                    --> all of the source files for the application
+  dsnyhackathon
+   source/
+    smart-app
+  fepreocessor
+  nodeproxy
+   nodeproxy.js
+
+```
