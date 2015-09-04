@@ -20,6 +20,9 @@ public class SequenceRegistry implements ISequenceRegistry {
 	 */
 	@Override
 	public synchronized long getLastSequence(String sequenceScope){
+		if( !sequenceMap.containsKey(sequenceScope)){
+			sequenceMap.put(sequenceScope, 0L);
+		}
 		return sequenceMap.get(sequenceScope);
 	}	
 	
