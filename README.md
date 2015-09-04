@@ -65,6 +65,16 @@ Testing
 --------
 Currently the testing capabilities are limited to reviewing the log files to determine the order in which the commands were executed. However automated end-to-end tests could be built if the server sents back a message confirmation after the message is processed. Due to lack of time, we did not build that. Unit Tests could be built if stub dependencies could be injected.
 
+Manual Testing
+---------------
+Use the UI to stack up commands in an incorrect sequence and send. The server logs will show that they get processed according to the sequence numbers.
+
+We think it is a  wow factor UI, check it out.
+
+If you want to use curl ( send the following message with different sequence id from 4 to 1)
+
+curl --noproxy localhost -v -H "Content-Type: application/json" --request POST  http://localhost:8080/smartapp/processCommand -d '{ "name":"AddTask", "sequenceScope": "clientid-domain1", "sequenceId": 1, "message": "This would be  json message"}'
+
 Current Drawbacks
 -----------------
 This solution does not use a centeralized store ( DB) for Sequence Registry. The current implementation will work if it is tested on a single JVM. Spring Integration will be a perfectly suited candidate for receiving messages on different end-points ( REST/SOAP/AMQP - Gatways) and processing messages. We could write custom Message Processors.
